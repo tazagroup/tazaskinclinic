@@ -21,7 +21,4 @@ jobs:
       - name: Set Heroku API key
         run: echo "$e5456e5d-5dc2-4428-94ab-282c6bb6112c" | gh secret set e5456e5d-5dc2-4428-94ab-282c6bb6112c
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v4
-        with:
-          heroku_api_key: e5456e5d-5dc2-4428-94ab-282c6bb6112c
-          heroku_app_name: my-nestjs-app
+        run: heroku deploy
