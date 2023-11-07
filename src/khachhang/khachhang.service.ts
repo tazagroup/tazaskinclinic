@@ -4,16 +4,17 @@ import { UpdateKhachhangDto } from './dto/update-khachhang.dto';
 
 @Injectable()
 export class KhachhangService {
+  constructor() {}
   create(createKhachhangDto: CreateKhachhangDto) {
     return 'This action adds a new khachhang';
   }
 
   findAll() {
-    return `This action returns all khachhang`;
+   // return this.prisma.article.findMany({ where: { published: true } });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} khachhang`;
+  //  return this.prisma.article.findUnique({ where: { id } });
   }
 
   update(id: number, updateKhachhangDto: UpdateKhachhangDto) {

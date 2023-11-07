@@ -5,5 +5,6 @@ import { KhachhangController } from './khachhang.controller';
 @Module({
   controllers: [KhachhangController],
   providers: [KhachhangService],
+  exports:[KhachhangService]
 })
 export class KhachhangModule {}
