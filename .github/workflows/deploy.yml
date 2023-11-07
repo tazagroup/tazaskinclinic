@@ -1,4 +1,4 @@
-name: Deploy NestJS to cPanel
+name: Deploy NestJS to Heroku
 
 on:
   push:
@@ -24,18 +24,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Upload build artifacts to cPanel
-        uses: lishuping/ftp-action@v4
-
+      - name: Set Heroku API key
+        run: echo "$e5456e5d-5dc2-4428-94ab-282c6bb6112c" | gh secret set e5456e5d-5dc2-4428-94ab-282c6bb6112c
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v4
         with:
-          server: cpanel.example.com
-          username: cpanel_username
-          password: cpanel_password
-          remote_directory: /public_html
-
-      - name: Set file permissions
-        run: ssh -i ~/.ssh/<ssh_key_file> cpanel_username@cpanel.example.com "chmod -R 755 /public_html"
-
-      - name: Restart Apache
-        run: ssh -i ~/.ssh/<ssh_key_file> cpanel_username@cpanel.example.com "/usr/local/apache2/bin/apachectl restart"
+          heroku_api_key: e5456e5d-5dc2-4428-94ab-282c6bb6112c
+          heroku_app_name: my-nestjs-app
