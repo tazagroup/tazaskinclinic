@@ -1,0 +1,30 @@
+name: Deploy NestJS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build NestJS application
+        run: npm run build
+
+      - name: Deploy NestJS application
+        # Replace the following steps with your deployment steps
+        # For example, to deploy to Heroku, you would use the following steps:
+        - uses: actions/checkout@v3
+
+        - name: Set Heroku API key
+          run: echo "$HEROKU_API_KEY" | gh secret set HEROKU_API_KEY
+
+        - name: Deploy to Heroku
+          run: heroku deploy
