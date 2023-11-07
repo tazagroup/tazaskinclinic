@@ -1,4 +1,4 @@
-name: Deploy NestJS
+name: Deploy NestJS to cPanel
 
 on:
   push:
@@ -18,13 +18,24 @@ jobs:
       - name: Build NestJS application
         run: npm run build
 
-      - name: Deploy NestJS application
-        # Replace the following steps with your deployment steps
-        # For example, to deploy to Heroku, you would use the following steps:
-        - uses: actions/checkout@v3
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-        - name: Set Heroku API key
-          run: echo "$HEROKU_API_KEY" | gh secret set HEROKU_API_KEY
+    steps:
+      - uses: actions/checkout@v3
 
-        - name: Deploy to Heroku
-          run: heroku deploy
+      - name: Upload build artifacts to cPanel
+        uses: lishuping/ftp-action@v4
+
+        with:
+          server: cpanel.example.com
+          username: cpanel_username
+          password: cpanel_password
+          remote_directory: /public_html
+
+      - name: Set file permissions
+        run: ssh -i ~/.ssh/<ssh_key_file> cpanel_username@cpanel.example.com "chmod -R 755 /public_html"
+
+      - name: Restart Apache
+        run: ssh -i ~/.ssh/<ssh_key_file> cpanel_username@cpanel.example.com "/usr/local/apache2/bin/apachectl restart"
